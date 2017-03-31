@@ -1,0 +1,21 @@
+@prefix :        <http://example.com/Competence_Ontology#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix JobSeeOnt:  <http://example.com/JobSeeker_Ontology#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+
+:is_competence_of_Candidacy
+      a       rdf:Property ;
+      rdfs:domain :Competence ;
+      rdfs:range JobSeeOnt:Candidacy .
+
+:requires
+      a       rdf:Property ;
+      rdfs:domain :Competence ;
+      rdfs:range JobSeeOnt:Education .
+
+:Competence
+      a       rdfs:Class .
+
+

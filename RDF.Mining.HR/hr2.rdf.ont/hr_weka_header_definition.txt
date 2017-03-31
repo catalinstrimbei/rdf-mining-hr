@@ -1,0 +1,24 @@
+@RELATION Job_Seeker_Data
+
+@ATTRIBUTE Job_Seeker						string
+@ATTRIBUTE Education_Title		 			{Master,Bachelor,Other}
+@ATTRIBUTE Education_Title_Spec 			{Computer-Science,Information-Technology,Electronics,Computer-Engineering,Software-Engineering,Computer-Applications,OTHER}
+
+@ATTRIBUTE Java_Programming_Skills			{TRUE, FALSE}
+@ATTRIBUTE SQL_Programming_Skills			{TRUE, FALSE}
+@ATTRIBUTE NOSQL_Programming_Skills			{TRUE, FALSE}
+@ATTRIBUTE UML_Skills						{TRUE, FALSE}
+@ATTRIBUTE SOA_Developer_Skills				{TRUE, FALSE}
+@ATTRIBUTE Java_Web_Developer_Skills		{TRUE, FALSE}
+@ATTRIBUTE Web_Developer_Skills				{TRUE, FALSE}
+@ATTRIBUTE DB_Developer_Skills				{TRUE, FALSE}
+@ATTRIBUTE Java_Persistence_Skills			{TRUE, FALSE}
+
+@ATTRIBUTE Years_Experience_last			numeric
+@ATTRIBUTE Position_count	 				numeric
+@ATTRIBUTE Years_experience_position 		numeric
+
+@ATTRIBUTE Position_held 					{JAVA-DEVELOPER,JEE-DEVELOPER,SOFTWARE-ENGINEER,OTHER-DEVELOPER,OTHER-PROGRAMER,ANALYST,OTHER-DEVELOPMENT,OTHER-ENGINEER, OTHER}
+@ATTRIBUTE class 					        {Yes, No}
+
+@DATA

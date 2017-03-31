@@ -1,0 +1,81 @@
+PREFIX JobSeeOnt: 	<http://www.example.com/JobSeeker_Ontology#> 
+PREFIX rdf: 		<http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+PREFIX owl: 		<http://www.w3.org/2002/07/owl#> 
+PREFIX xsd: 		<http://www.w3.org/2001/XMLSchema#> 
+PREFIX CompOnt: 	<http://example.com/Competence_Ontology#> 
+PREFIX SkillOnt: 	<http://example.com/Skill_Ontology#> 
+PREFIX rdfs: 		<http://www.w3.org/2000/01/rdf-schema#> 
+PREFIX foaf: 		<http://xmlns.com/foaf/0.1/> 
+
+		SELECT 
+			?Job_Seeker #?last_name 
+			?skillDescription
+			?Java_Programming_Skills 
+			?SQL_Programming_Skills 
+			?NOSQL_Programming_Skills
+			?UML_Skills
+			?SOA_Developer_Skills
+			?Java_Web_Developer_Skills
+			?Web_Developer_Skills
+			?DB_Developer_Skills
+			?Java_Persistence_Skills
+		WHERE
+		 { 	?Job_Seeker a JobSeeOnt:Job_Seeker .
+		 	#?Job_Seeker JobSeeOnt:Last_Name 	?last_name .
+		 	?Job_Seeker JobSeeOnt:has_candidacy ?candidacy .
+		 	?competence CompOnt:is_competence_of_Candidacy ?candidacy .
+		 	?skill rdfs:subClassOf ?competence .
+		 	?skill SkillOnt:Description ?skillDescription
+		 	BIND(	
+				CONTAINS(UCASE(?skillDescription), "JAVA") ||
+				CONTAINS(UCASE(?skillDescription), "JSE") ||
+				CONTAINS(UCASE(?skillDescription), "JEE") ||
+				CONTAINS(UCASE(?skillDescription), "J2SE") ||
+		 		CONTAINS(UCASE(?skillDescription), "J2EE")
+		 	AS ?Java_Programming_Skills)
+		 	BIND(	
+		 		CONTAINS(UCASE(?skillDescription), "SQL") ||
+		 		CONTAINS(UCASE(?skillDescription), "Oracle")	 
+		 	AS ?SQL_Programming_Skills)
+		 	BIND(	
+		 		CONTAINS(UCASE(?skillDescription), "NOSQL") ||
+		 		CONTAINS(UCASE(?skillDescription), "MONGO DB")	 
+		 	AS ?NOSQL_Programming_Skills)
+		 	BIND(	
+		 		CONTAINS(UCASE(?skillDescription), "UML")	 
+		 	AS ?UML_Skills)
+		 	BIND(
+		 		CONTAINS(UCASE(?skillDescription), "WEB SERVICE") ||	
+		 		CONTAINS(UCASE(?skillDescription), "SOA") ||
+		 		CONTAINS(UCASE(?skillDescription), "REST") ||
+		 		CONTAINS(UCASE(?skillDescription), "SOAP") ||
+		 		CONTAINS(UCASE(?skillDescription), "JAX-RS") ||
+		 		CONTAINS(UCASE(?skillDescription), "JAX-WS")	 
+		 	AS ?SOA_Developer_Skills)
+		 	BIND(	
+		 		CONTAINS(UCASE(?skillDescription), "SERVLET") ||
+		 		CONTAINS(UCASE(?skillDescription), "JSP") ||
+		 		CONTAINS(UCASE(?skillDescription), "JSF") ||
+		 		CONTAINS(UCASE(?skillDescription), "STRUTS")	 
+		 	AS ?Java_Web_Developer_Skills)
+			BIND(	
+		 		CONTAINS(UCASE(?skillDescription), "HTML") ||
+		 		CONTAINS(UCASE(?skillDescription), "JAVASCRIPT") ||
+		 		CONTAINS(UCASE(?skillDescription), "JQUERY") ||
+		 		CONTAINS(UCASE(?skillDescription), "ANGULARJS")	 
+		 	AS ?Web_Developer_Skills) 	
+			BIND(	
+		 		CONTAINS(UCASE(?skillDescription), "SQL") ||
+		 		CONTAINS(UCASE(?skillDescription), "ORACLE") ||
+		 		CONTAINS(UCASE(?skillDescription), "MYSQL") ||
+		 		CONTAINS(UCASE(?skillDescription), "POSTGRES")	 
+		 	AS ?DB_Developer_Skills)  	
+			BIND(	
+		 		CONTAINS(UCASE(?skillDescription), "JDBC") &&
+		 		  ( CONTAINS(UCASE(?skillDescription), "JPA") ||
+		 			CONTAINS(UCASE(?skillDescription), "JAVA PERSISTENCE API") ||
+		 			CONTAINS(UCASE(?skillDescription), "HIBERNATE") ) 
+		 	AS ?Java_Persistence_Skills)  	
+		 }
+		 #LIMIT 10
+		 ORDER BY ?Job_Seeker

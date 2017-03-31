@@ -1,0 +1,187 @@
+@prefix :        <http://www.example.com/JobSeeker_Ontology#> .
+@prefix dc:      <http://purl.org/dc/elements/1.1/> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+:Occupation
+		a rdfs:Class.
+:Description
+      a       rdf:Property ;
+      rdfs:domain :Occupation ;
+      rdfs:range xsd:string .
+
+:is_associated_with_Work_Experience
+      a       rdf:Property ;
+      rdfs:domain :Occupation ;
+      rdfs:range :Work_Experience .
+	  
+:Name
+      a       rdf:Property ;
+      rdfs:domain :Occupation ;
+      rdfs:range xsd:string .
+	  
+:is_associated_with_Objective
+      a       rdf:Property ;
+      rdfs:domain :Occupation ;
+      rdfs:range :Objective .
+	  
+:is_associated_with_Candidacy
+      a       rdf:Property ;
+      rdfs:domain :Occupation ;
+      rdfs:range :Candidacy .
+	  
+:Code
+      a       rdf:Property ;
+      rdfs:domain :Occupation ;
+      rdfs:range xsd:string .	 
+	  
+:Education
+		a rdfs:Class.
+		
+:Organization_Name
+      a       rdf:Property ;
+      rdfs:domain :Education ;
+      rdfs:range xsd:string .
+	  
+:Title
+      a       rdf:Property ;
+      rdfs:domain :Education ;
+      rdfs:range xsd:string .
+	  
+:is_education_of
+      a       rdf:Property ;
+      rdfs:domain :Education ;
+      rdfs:range :Candidacy .
+	  
+:is_required_by
+      a       rdf:Property ;
+      rdfs:domain :Education ;
+      rdfs:range :Competence .
+
+:Work_Experience
+      a       rdfs:Class .
+
+:Position_held
+      a       rdf:Property ;
+      rdfs:domain :Work_Experience ;
+      rdfs:range xsd:string .
+
+:has_objective
+      a       rdf:Property ;
+      rdfs:domain :Candidacy ;
+      rdfs:range :Objective .
+
+:has_work_experience
+      a       rdf:Property ;
+      rdfs:domain :Candidacy ;
+      rdfs:range :Work_Experience .
+
+:Begin_date
+      a       rdf:Property ;
+      rdfs:domain :Work_Experience ;
+      rdfs:range xsd:string .
+
+
+:two_four
+      a       :Experience ;
+      :code   "3"^^xsd:string ;
+      :description "2-4 years' experience"^^xsd:string .
+
+
+:five_seven
+      a       :Experience ;
+      :code   "4"^^xsd:string ;
+      :description "5-7 years' experience or more"^^xsd:string .
+
+:End_Date
+      a       rdf:Property ;
+      rdfs:domain :Work_Experience ;
+      rdfs:range xsd:string .
+
+
+:Address_of_the_Employer
+      a       rdf:Property ;
+      rdfs:domain :Work_Experience ;
+      rdfs:range xsd:string .
+
+:Candidacy
+      a       rdfs:Class .
+
+
+:less_1
+      a       :Experience ;
+      :code   "1"^^xsd:string ;
+      :description "Less than 1 year's experience"^^xsd:string .
+
+
+:no_experience
+      a       :Experience ;
+      :code   "0"^^xsd:string ;
+      :description "No experience"^^xsd:string .
+
+:Name_of_the_Employer
+      a       rdf:Property ;
+      rdfs:domain :Work_Experience ;
+      rdfs:range xsd:string .
+
+:has_candidacy
+      a       rdf:Property ;
+      rdfs:domain :Job_Seeker ;
+      rdfs:range :Candidacy .
+
+:belongs_to
+      a       rdf:Property ;
+      rdfs:domain :Work_Experience , :Candidacy ;
+      rdfs:range :Job_Seeker , :Candidacy .
+
+:has_education
+      a       rdf:Property ;
+      rdfs:domain :Candidacy ;
+      rdfs:range :Education .
+
+:Last_Name
+      a       rdf:Property ;
+      rdfs:domain :Job_Seeker ;
+      rdfs:range xsd:string .
+
+:code
+      a       rdf:Property ;
+      rdfs:domain :Experience ;
+      rdfs:range xsd:string.
+
+:has_job_category
+      a       rdf:Property ;
+      rdfs:domain :Work_Experience;
+      rdfs:range :Occupation.
+
+:Job_Seeker
+      a       rdfs:Class .
+
+:Experience
+      a       rdfs:Class .
+
+:occupation_experience
+      a       rdf:Property ;
+      rdfs:domain :Objective ;
+      rdfs:range :Experience .
+
+:Main_activities
+      a       rdf:Property ;
+      rdfs:domain :Work_Experience ;
+      rdfs:range xsd:string .
+
+:description
+      a       rdf:Property ;
+      rdfs:domain :Experience ;
+      rdfs:range xsd:string .
+
+:Objective
+      a       rdfs:Class .
+
+:one_two
+      a       :Experience ;
+      :code   "2"^^xsd:string ;
+      :description "1-2 years' experience"^^xsd:string .
+
+

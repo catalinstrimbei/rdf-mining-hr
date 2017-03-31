@@ -1,0 +1,48 @@
+PREFIX JobSeeOnt: 	<http://www.example.com/JobSeeker_Ontology#> 
+PREFIX rdf: 		<http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+PREFIX owl: 		<http://www.w3.org/2002/07/owl#> 
+PREFIX xsd: 		<http://www.w3.org/2001/XMLSchema#> 
+PREFIX CompOnt: 	<http://example.com/Competence_Ontology#> 
+PREFIX SkillOnt: 	<http://example.com/Skill_Ontology#> 
+PREFIX rdfs: 		<http://www.w3.org/2000/01/rdf-schema#> 
+PREFIX foaf: 		<http://xmlns.com/foaf/0.1/> 
+
+		SELECT 
+			?Job_Seeker  
+			#?last_name 
+			?Years_Experience 
+			?Position_held_count 
+			?Years_to_position
+		WHERE 
+		{
+			{
+				SELECT 
+					?Job_Seeker  
+					#?last_name  
+					(MIN(?Begin_date_parsed) AS ?Begin_date_min) 
+					(MAX(?End_date_parsed) AS ?End_date_max) 
+					(COUNT(?Position_held) AS ?Position_held_count)
+					(MAX(?End_date_parsed) - MIN(?Begin_date_parsed) AS ?Years_Experience)
+					#?Begin_date
+					#?Begin_date_parsed
+					#?End_date
+					#?End_date_parsed
+				WHERE
+				 { 	?Job_Seeker a JobSeeOnt:Job_Seeker .
+				 	#?Job_Seeker JobSeeOnt:Last_Name 	?last_name .
+				 	?Job_Seeker JobSeeOnt:has_candidacy ?candidacy .
+				 	?candidacy JobSeeOnt:has_work_experience ?experience .
+				 	?experience JobSeeOnt:Position_held ?Position_held .
+				 	?experience JobSeeOnt:Begin_date ?Begin_date .
+				 	?experience JobSeeOnt:End_Date ?End_date .
+				 	BIND((IF (REPLACE(?Begin_date, "  ","")  = "Prezent", 2017, 
+				 		xsd:integer(SUBSTR(?Begin_date, STRLEN(?Begin_date)-1, 2)) + 2000)) AS ?Begin_date_parsed)
+				 	BIND((IF (REPLACE(?End_date, "  ","")  = "Prezent", 2017, 
+				 		xsd:integer(SUBSTR(?End_date, STRLEN(?End_date)-3, 4)))) AS ?End_date_parsed)
+				 	FILTER(?End_date_parsed > 0)
+				 }
+				 GROUP BY ?Job_Seeker  #?last_name
+			 }
+			 BIND((?Years_Experience/?Position_held_count) AS ?Years_to_position)
+		 }	
+		 ORDER BY ?Job_Seeker

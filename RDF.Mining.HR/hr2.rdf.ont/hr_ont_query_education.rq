@@ -1,0 +1,41 @@
+PREFIX JobSeeOnt: 	<http://www.example.com/JobSeeker_Ontology#> 
+PREFIX rdf: 		<http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+PREFIX owl: 		<http://www.w3.org/2002/07/owl#> 
+PREFIX xsd: 		<http://www.w3.org/2001/XMLSchema#> 
+PREFIX CompOnt: 	<http://example.com/Competence_Ontology#> 
+PREFIX SkillOnt: 	<http://example.com/Skill_Ontology#> 
+PREFIX rdfs: 		<http://www.w3.org/2000/01/rdf-schema#> 
+PREFIX foaf: 		<http://xmlns.com/foaf/0.1/> 
+
+		SELECT 
+			?Job_Seeker 
+			#?last_name 
+			?Title 
+			(IF(?Title = "-","?",?Title)  as ?Education_Title)
+			?Specialization
+			(
+				IF(CONTAINS(UCASE(?Specialization), "COMPUTER SCIENCE") || CONTAINS(UCASE(?Specialization), "CSE")
+					|| CONTAINS(UCASE(?Specialization), "COMPUTERS SCIENCE"), "Computer-Science",
+			 		IF(CONTAINS(UCASE(?Specialization), "INFORMATION TECHNOLOGY")
+			 			|| CONTAINS(UCASE(?Specialization), "INFORMATION TECHNOLOGIES"), "Information-Technology", 
+						IF(CONTAINS(UCASE(?Specialization), "ELECTRONICS") || CONTAINS(UCASE(?Specialization), "ELECTRICAL"),"Electronics",
+							IF(CONTAINS(UCASE(?Specialization), "COMPUTER ENGINEERING"),"Computer-Engineering",
+								IF(CONTAINS(UCASE(?Specialization), "SOFTWARE ENGINEERING"),"Software-Engineering",
+									IF(CONTAINS(UCASE(?Specialization), "COMPUTER APPLICATIONS")
+										|| CONTAINS(UCASE(?Specialization), "COMPUTER APPLICATION"),"Computer-Applications","OTHER"
+									)
+								)
+							)
+						)
+					)
+				)
+		 	AS ?Education_Title_Spec)			
+		WHERE
+		 { 	?Job_Seeker a JobSeeOnt:Job_Seeker .
+		 	#?Job_Seeker JobSeeOnt:Last_Name 	?last_name .
+		 	?Job_Seeker JobSeeOnt:has_candidacy ?candidacy .
+		 	?candidacy JobSeeOnt:has_education ?education .
+		 	?education JobSeeOnt:Title ?Title .
+		 	?education JobSeeOnt:has_specialization ?Specialization .
+		 }	
+		 ORDER BY ?Job_Seeker
